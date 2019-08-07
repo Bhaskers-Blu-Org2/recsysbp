@@ -1,4 +1,4 @@
-# Recommenders 
+# Microsoft Recommenders Best Practice
 
 This [MLHub](https://mlhub.ai) package provides an overview of the
 [Microsoft Recommenders](https://github.com/microsoft/recommenders)
@@ -197,6 +197,99 @@ Precision: 0.32
 Recall:    0.17
 NDCG:      0.37
 MAP:       0.10
+
+Press Enter to continue: 
+
+========================================
+Restricted Boltzmann Machine Recommender
+========================================
+
+We will now demonstrate the RBM, Restricted Boltzmann Machine (RBM), algorithm.
+RBM is a generative neural network model, adapted as a recommendation 
+algorithm, deployed also on the traditional Movielens benchmark dataset.
+
+System version: 3.6.8 (default, Jan 14 2019, 11:02:34) 
+[GCC 8.0.1 20180414 (experimental) [trunk revision 259383]]
+Pandas version: 0.22.0
+
+Press Enter to continue: 
+
+=============
+RBM Algorithm
+=============
+
+RBM generates ratings for a user/item (i.e., movie) pair using a collaborative
+filtering based approach. While matrix factorization methods learn how to
+reproduce an instance of the user/item affinity matrix, the RBM learns the
+underlying probability distribution. This has several advantages related to
+generalizability, training stability, and fast training on GPUs.
+
+The data schema for the training dataset is:
+
+  <User ID> <Item ID> [<Time>] [<Event Type>] [<Event Weight>].
+
+Each observation is an interaction between a user and item (e.g., movie
+watched on a streaming site or an item clicked on an e-commerce website).
+
+The dataset is being loaded. Once loaded we can review the first
+few observations.
+
+Press Enter to continue: 
+
+==============
+Sample Ratings
+==============
+
+Below we illustrate the ratings that a number of users have provided for
+specific movies. Note that the Rating column will be treated as the Event
+Weight and we are not displaying the Time column. From the 100,000 events
+in the dataset we will be partitioning the data into training and test
+subsets. The model is built from the training dataset. 
+
+       UserID  MovieID  Rating                           MovieTitle
+31639     882      568       5                         Speed (1994)
+93016     568      735       2                  Philadelphia (1993)
+78924     387       83       4        Much Ado About Nothing (1993)
+13985     621     1016       4                       Con Air (1997)
+47169     782      315       4                     Apt Pupil (1998)
+63864      80      269       3               Full Monty, The (1997)
+8960      805      679       4           Conan the Barbarian (1981)
+75882     665      282       4               Time to Kill, A (1996)
+60024     638      128       3                      Supercop (1992)
+77312     846      426       1  Transformers: The Movie, The (1986)
+
+Training matrix size (users, movies) is: (943, 1682)
+Testing matrix size is:  (943, 1682)
+
+We will now fit the model and apply it to the dataset
+
+Press Enter to continue: 
+
+The model took 19 seconds to fit and  6 seconds to rank.
+
+Press Enter to continue to performance evalution: 
+
+==========================
+RBM Performance Evaluation
+==========================
+
+We evaluate the perfomance of the model using typical recommendations model
+performance criteria as provided by the Microsoft recommenders toolkit. The
+following evaluation criteria are commonly used. 
+
+Precision is the fraction of the K movies recommended that are relevant to the
+user. Recall is the proportion of relevant items that are recommended. NDCG is
+the Normalized Discounted Cumulative Gain which evaluates how well the 
+predicted items for a user are ranked based on relevance. Finally, MAP is the
+mean average precision, calcuated as the average precision for each user
+normalised over all users.  MAP is generally a good discriminator between
+models and is reported to be quite stable.
+
+rbm_ref with @K=10
+Precision: 0.43 
+Recall:    0.25
+NDCG:      0.50
+MAP:       0.17
 ```
 
 # Contributing
