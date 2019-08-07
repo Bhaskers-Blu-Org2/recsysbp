@@ -44,7 +44,160 @@ $ ml configure recsysbp
 
 ## Demonstration
 
+```console
+$ ml demo recsysbp 
+====================================
+Microsoft Recommenders Best Practice
+====================================
 
+Welcome to a demo of the Microsoft open source Recommendations toolkit.
+This is a Microsoft open source project though not a supported product.
+Pull requests are most welcome.
+
+This demo runs several recommender algorithms on the traditional MovieLens 
+benchmark dataset which is freely available from
+https://grouplens.org/datasets/movielens/.
+
+Press Enter to continue: 
+
+System version: 3.6.8 (default, Jan 14 2019, 11:02:34) 
+[GCC 8.0.1 20180414 (experimental) [trunk revision 259383]]
+Pandas version: 0.22.0
+
+=============
+SAR Algorithm
+=============
+
+SAR, the smart adaptive recommendation algorithm, is a fast algorithm for 
+personalized recommendations based on user history using collaborative
+filtering. It produces easily explainable and interpretable recommendations
+and handles "cold item" and "semi-cold user" scenarios. 
+
+The training data schema is:
+
+  <User ID> <Item ID> <Time> [<Event Type>] [<Event Weight>].
+
+Each observation is an interaction between a user and item (e.g., a movie
+watched on a streaming site or an item clicked on an e-commerce website).
+
+The MovieLens dataset records movie ratings provided by viewers. The ratings
+are treated as the event weights. The smaller of the available datasets is
+used, consisting of 100K users.
+
+The dataset is being loaded. Once loaded we can review the first
+few observations.
+
+Press Enter to continue: 
+
+==============
+Sample Ratings
+==============
+
+Below we illustrate the ratings that a number of users have provided for
+specific movies. Note that the Rating column will be treated as the Event
+Weight and we are not displaying the Time column. From the 100,000 events
+in the dataset we will be partitioning the data into training and test
+subsets. The model is built from the training dataset. 
+
+       UserId  MovieId  Rating                              MovieTitle
+15109      44      294       4                        Liar Liar (1997)
+11818     131      248       3              Grosse Pointe Blank (1997)
+152       131      302       5                L.A. Confidential (1997)
+4065      717      546       3                     Broken Arrow (1996)
+61219     523      509       4                     My Left Foot (1989)
+5160      806       98       4        Silence of the Lambs, The (1991)
+57336     758      240       3  Beavis and Butt-head Do America (1996)
+5345      940      193       3                 Right Stuff, The (1983)
+56435     450       81       4             Hudsucker Proxy, The (1994)
+9701      634      515       4                        Boot, Das (1981)
+
+Press Enter to continue: 
+
+=============
+Fit the Model
+=============
+
+We will now fit the model (<1s) and apply it to the test dataset
+
+For a random sample of users from the test dataset we list the model's
+prediction of their rating of a particular movie. The predicted ratings 
+are used in ranking their preferences rather than as specific ratings, hence
+we see some values beyond the 1-5 range. The rankings are used to suggest
+several (K=10) movies that the user has not previously seen but are likely to
+be highly rated by that user.
+
+   UserId  MovieId  Predict                            MovieTitle
+0     146      690      7.1           Seven Years in Tibet (1997)
+1     802       22      0.3                     Braveheart (1995)
+2     226       22      1.8                     Braveheart (1995)
+3     658      173      0.3            Princess Bride, The (1987)
+4     457      234      9.3                           Jaws (1975)
+5     328      230     13.5  Star Trek IV: The Voyage Home (1986)
+6     330      186      1.1            Blues Brothers, The (1980)
+7     610      202     14.0                  Groundhog Day (1993)
+8     339       56     77.8                   Pulp Fiction (1994)
+9     314       82      1.4                  Jurassic Park (1993)
+
+Press Enter to continue: 
+
+=======================
+Show Random User Movies
+=======================
+
+For the first user above (originally chosen at random) we list below their
+top 5 rated movies and then the movies that are recommended for them.
+This user has actually rated 29 movies in total.
+
+   UserId  MovieId  Rating                           MovieTitle
+0     146     1022       5  Fast, Cheap & Out of Control (1997)
+1     146      331       5                     Edge, The (1997)
+2     146      336       5                   Playing God (1997)
+3     146      315       5                     Apt Pupil (1998)
+4     146      245       5              Devil's Own, The (1997) 
+
+   UserId  MovieId  Predict                 MovieTitle
+0     146      313      8.4             Titanic (1997)
+1     146      333      8.3           Game, The (1997)
+2     146      288      7.8              Scream (1996)
+3     146      340      7.7       Boogie Nights (1997)
+4     146      316      7.4  As Good As It Gets (1997)
+
+We can generate a visual to show the top 5 movies as rated by the user, and
+the movies recommended for the user. This requires downloading images from
+Amazon (IMDB) which can take a minute or two. If you choose not to construct
+the visual a previously build image will be displayed.
+
+Shall we construct the visual? [Y|n]: n
+
+We will display a sample image that was generated previously.
+```
+![](sample.png)
+
+```console
+Press Enter to continue: 
+
+======================
+Performance Evaluation
+======================
+
+We evaluate the perfomance of the model using typical recommendations model
+performance criteria as provided by the Microsoft recommenders toolkit. The
+following evaluation criteria are commonly used. 
+
+Precision is the fraction of the K movies recommended that are relevant to the
+user. Recall is the proportion of relevant items that are recommended. NDCG is
+the Normalized Discounted Cumulative Gain which evaluates how well the 
+predicted items for a user are ranked based on relevance. Finally, MAP is the
+mean average precision, calcuated as the average precision for each user
+normalised over all users.  MAP is generally a good discriminator between
+models and is quite stable.
+
+sar_ref with @K=10
+Precision: 0.32 
+Recall:    0.17
+NDCG:      0.37
+MAP:       0.10
+```
 
 # Contributing
 
