@@ -1,0 +1,29 @@
+--- # RECOMMENDERS
+meta:
+  name         : recsysbp
+  title        : Recommender Best Practice.
+  keywords     : recommendation
+  version      : 2.0.0
+  languages    : python
+  license      : mit
+  author       : Graham.Williams@microsoft.com
+  maintainer   : Graham.Williams@microsoft.com
+  url          : https://github.com/microsoft/recsysbp
+dependencies:
+  python3:
+    - scipy
+    - sklearn
+    - pandas
+  pip3:
+    - imdbpy
+    - toolz # DLVM does not have python3-toolz so do pip
+  files:
+    - 'Microsoft/Recommenders:reco_utils'
+    - demo.py
+    - recutils.py
+    - na.jpg
+    - sample.png
+    - README.md
+    - http://files.grouplens.org/datasets/movielens/ml-100k/u.item: titles.txt
+commands:
+  demo    : Demo recommendation model build and evaluate.
