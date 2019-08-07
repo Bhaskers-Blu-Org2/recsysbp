@@ -40,6 +40,7 @@ $ pip3 install mlhub
 ```console
 $ ml install   recsysbp
 $ ml configure recsysbp
+```
 
 ## Demonstration
 
